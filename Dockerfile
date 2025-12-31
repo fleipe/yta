@@ -4,6 +4,10 @@ FROM n8nio/n8n:latest-debian
 # Mudar para o usuário root para instalar pacotes de sistema
 USER root
 
+# Fix for EOL Debian "Buster" repositories by pointing to the official archive
+RUN echo "deb http://archive.debian.org/debian/ buster main" > /etc/apt/sources.list && \
+    echo "deb http://archive.debian.org/debian-security/ buster/updates main" >> /etc/apt/sources.list
+
 # Instalação de dependências essenciais usando apt-get
 # - FFmpeg: Para manipulação de áudio e vídeo.
 # - Python 3 e pip: Para executar scripts de automação.
