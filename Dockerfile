@@ -1,27 +1,23 @@
-# Imagem base oficial do n8n
-FROM n8nio/n8n:latest
+# Use the explicit Debian-based image for n8n for stability
+FROM n8nio/n8n:latest-debian
 
 # Mudar para o usuário root para instalar pacotes de sistema
 USER root
 
-# Instalação de dependências essenciais:
+# Instalação de dependências essenciais usando apt-get
 # - FFmpeg: Para manipulação de áudio e vídeo.
 # - Python 3 e pip: Para executar scripts de automação.
-RUN /sbin/apk add --no-cache \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     ffmpeg \
     python3 \
-    py3-pip
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
 
 # Criação de um ambiente virtual Python (venv) para isolar as dependências.
-# Esta é uma boa prática para evitar conflitos com pacotes do sistema.
 RUN python3 -m venv /opt/venv
-
-# Adiciona o venv ao PATH do sistema
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Instalação das bibliotecas Python para automação de conteúdo
-# - edge-tts: Acessa a API de Text-to-Speech da Microsoft para vozes neurais gratuitas.
-# - moviepy: Biblioteca para edição de vídeo programática.
 RUN pip install --no-cache-dir \
     edge-tts \
     moviepy
