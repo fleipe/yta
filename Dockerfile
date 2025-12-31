@@ -24,8 +24,8 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 # Instalação das bibliotecas Python para automação de conteúdo
 RUN pip install --no-cache-dir \
-    edge-tts \
-    moviepy
+    "edge-tts==6.1.8" \
+    "moviepy==1.0.3"
 
 # Retorna ao usuário padrão do n8n (node) por questões de segurança
 USER node
