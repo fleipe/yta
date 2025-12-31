@@ -7,10 +7,11 @@ USER root
 # Instalação de dependências essenciais:
 # - FFmpeg: Para manipulação de áudio e vídeo.
 # - Python 3 e pip: Para executar scripts de automação.
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     ffmpeg \
     python3 \
-    py3-pip
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
 
 # Criação de um ambiente virtual Python (venv) para isolar as dependências.
 # Esta é uma boa prática para evitar conflitos com pacotes do sistema.
